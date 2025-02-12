@@ -27,18 +27,18 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('tickets.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
                                 <p>Daftar Tiket</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('tickets.create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-warning"></i>
                                 <p>Tambah Tiket</p>
                             </a>
                         </li>
-                    </ul>
+                    </ul>                    
                 </li>                
 
                 <!-- Kategori Wisata -->
@@ -46,25 +46,37 @@
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-list text-info"></i>
                         <p>
-                            Kategori Wisata
+                            Kategori wisata
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('kategori.create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon text-success"></i>
-                                <p>Daftar Wisata</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon text-warning"></i>
-                                <p>Tambah Wisata</p>
+                                <p>Kategori Wisata</p>
                             </a>
                         </li>
                     </ul>
                 </li>
+                
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-map-marker-alt text-primary"></i>
+                        <p>
+                            Kategori Provinsi
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('kategori_provinsi.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon text-success"></i>
+                                <p>Kategori Provinsi</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>                
 
                 <!-- Penjualan Tiket -->
                 <li class="nav-item">
@@ -76,7 +88,7 @@
 
                 <!-- Manajemen User -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('users.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-users text-purple"></i>
                         <p>Manajemen User</p>
                     </a>

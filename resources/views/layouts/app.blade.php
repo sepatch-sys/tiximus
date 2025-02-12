@@ -28,11 +28,11 @@
         <div class="content-wrapper">
             <section class="content">
                 <div class="container-fluid">
-                    {{ $slot }}
+                    @yield('content')  <!-- Ini menggantikan $slot -->
                 </div>
             </section>
         </div>
-
+        
         <!-- Footer -->
         @include('layouts.footer')
 
