@@ -9,13 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('kategori_provinsis', function (Blueprint $table) {
+        Schema::create('category_tourisms', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_provinsi')->unique();
+            $table->string('category_name')->unique();
             $table->timestamps();
-        });        
+        });
     }
 
     /**
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategori_provinsis');
+        Schema::dropIfExists('category_tourisms');
     }
 };

@@ -7,7 +7,7 @@
             </a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{ route('dashboard.index') }}" class="nav-link text-dark font-weight-reguler">Dashboard</a>
+            <a href="{{ route('dashboard.index') }}" class="nav-link text-dark font-weight-regular">Dashboard</a>
         </li>
     </ul>
 
@@ -15,7 +15,7 @@
     <ul class="navbar-nav ml-auto">
         <!-- User Dropdown Menu -->
         <li class="nav-item dropdown">
-            <a class="nav-link text-dark font-weight-reguler" data-toggle="dropdown" href="#">
+            <a class="nav-link text-dark font-weight-regular" data-toggle="dropdown" href="#">
                 <i class="far fa-user"></i>
                 <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 <i class="fas fa-caret-down ml-1"></i>
