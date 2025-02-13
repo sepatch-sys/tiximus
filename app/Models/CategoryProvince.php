@@ -11,5 +11,10 @@ class CategoryProvince extends Model
 
     protected $table = 'category_provinces';
 
-    protected $fillable = ['province_name']; // Allow mass assignment
+    protected $fillable = ['province_name', 'province_image'];
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

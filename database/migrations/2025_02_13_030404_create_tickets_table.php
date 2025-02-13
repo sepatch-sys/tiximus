@@ -9,11 +9,11 @@ return new class extends Migration {
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_province_id')->constrained('category_provinces')->onDelete('cascade');
+            $table->foreignId('category_tourism_id')->constrained('category_tourisms')->onDelete('cascade');
             $table->string('name');
-            $table->string('category')->nullable();
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 13, 0);
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

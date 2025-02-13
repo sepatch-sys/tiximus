@@ -21,10 +21,20 @@ class CategoryProvinceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'province_name' => 'required|unique:category_provinces,province_name|max:255'
+            'province_name' => 'required|unique:category_provinces,province_name|max:255',
+            'province_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        CategoryProvince::create(['province_name' => $request->province_name]);
+        $imagePath = null;
+
+        if ($request->hasFile('province_image')) {
+            $imagePath = $request->file('province_image')->store('province_image', 'public');
+        }
+
+        CategoryProvince::create([
+            'province_name' => $request->province_name,
+            'province_image' => $imagePath
+        ]);
 
         return redirect()->route('category_province.index')->with('success', 'Province Category added successfully!');
     }

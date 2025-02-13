@@ -15,7 +15,14 @@
         <ul class="list-disc pl-6 mb-4">
             @foreach ($categoryProvinces as $category)
                 <li class="flex justify-between items-center border-b py-2">
-                    <span>{{ $category->province_name }}</span>
+                    <div class="flex items-center">
+                        @if ($category->province_image)
+                            <img src="{{ asset('storage/' . $category->province_image) }}" 
+                                 alt="Province Image" 
+                                 class="w-12 h-12 object-cover rounded-lg mr-3">
+                        @endif
+                        <span>{{ $category->province_name }}</span>
+                    </div>
                     <form action="{{ route('category_province.destroy', $category->id) }}" method="POST">
                         @csrf
                         @method('DELETE')

@@ -15,7 +15,7 @@
                 @csrf
                 <div class="mb-4">
                     <label class="block text-gray-700">Category Name</label>
-                    <input type="text" name="category_name" class="w-full border rounded-lg p-2" required>
+                    <input type="text" name="tourism_name" class="w-full border rounded-lg p-2" required>
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add</button>
                 <a href="{{ route('category_tourism.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Back</a>

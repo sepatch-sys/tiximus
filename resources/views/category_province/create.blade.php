@@ -15,12 +15,18 @@
     @endif
 
     <div class="bg-white shadow-md rounded-lg overflow-hidden p-6">
-        <form action="{{ route('category_province.store') }}" method="POST">
+        <form action="{{ route('category_province.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
                 <label class="block text-gray-700">Province Name</label>
                 <input type="text" name="province_name" class="w-full border rounded-lg p-2" required>
             </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700">Province Image</label>
+                <input type="file" name="province_image" class="w-full border rounded-lg p-2">
+            </div>
+            
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
         </form>
     </div>

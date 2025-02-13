@@ -20,7 +20,7 @@
             <ul class="list-disc pl-6 mb-4">
                 @foreach ($categories as $category)
                     <li class="flex justify-between items-center border-b py-2">
-                        <span>{{ $category->category_name }}</span>
+                        <span>{{ $category->tourism_name }}</span>
                         <form action="{{ route('category_tourism.destroy', $category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')

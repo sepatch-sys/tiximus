@@ -24,10 +24,10 @@ class CategoryTourismController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name' => 'required|unique:category_tourisms,category_name|max:255'
+            'tourism_name' => 'required|unique:category_tourisms,tourism_name|max:255'
         ]);
 
-        CategoryTourism::create(['category_name' => $request->category_name]);
+        CategoryTourism::create(['tourism_name' => $request->tourism_name]);
 
         return redirect()->route('category_tourism.index')
             ->with('success', 'Category successfully added!');
