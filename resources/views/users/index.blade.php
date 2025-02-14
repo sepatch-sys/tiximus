@@ -22,7 +22,6 @@
                         <th class="py-3 px-6 text-left">Email</th>
                         <th class="py-3 px-6 text-left">Role</th>
                         <th class="py-3 px-6 text-left">Tanggal Dibuat</th>
-                        <th class="py-3 px-6 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
