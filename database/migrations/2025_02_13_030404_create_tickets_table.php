@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->string('name');
             $table->decimal('price', 13, 0);
             $table->text('description')->nullable();
+            $table->date('ticket_date');
             $table->timestamps();
         });
     }
