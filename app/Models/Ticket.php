@@ -9,5 +9,15 @@ class Ticket extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'category', 'price', 'description', 'image'];
+    protected $fillable = ['category_province_id', 'category_tourism_id', 'name', 'price', 'description', 'ticket_date'];
+
+    public function categoryProvince()
+    {
+        return $this->belongsTo(CategoryProvince::class, 'category_province_id');
+    }
+
+    public function categoryTourism()
+    {
+        return $this->belongsTo(CategoryTourism::class, 'category_tourism_id');
+    }
 }

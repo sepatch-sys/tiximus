@@ -1,6 +1,10 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Tourist Categories') }}
+        </h2>
+    </x-slot>
 
-@section('content')
     <div class="container mx-auto p-6">
         <h2 class="text-2xl font-semibold mb-4">Tourist Categories</h2>
 
@@ -22,7 +26,7 @@
             <ul class="list-disc pl-6 mb-4">
                 @foreach ($categories as $category)
                     <li class="flex justify-between items-center border-b py-2">
-                        <span>{{ $category->category_name }}</span>
+                        <span>{{ $category->tourism_name }}</span>
                         <form action="{{ route('category_tourism.destroy', $category->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -38,4 +42,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-app-layout>

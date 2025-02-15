@@ -31,15 +31,17 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
-    Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');
-    Route::post('/tickets/store', [TicketController::class, 'store'])->name('tickets.store');
+    Route::resource('tickets', TicketController::class);
 
     Route::resource('category_tourism', CategoryTourismController::class);
 
     Route::resource('category_province', CategoryProvinceController::class);
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+});
+
+Route::middleware(['auth', 'role:user'])->group(function () {
+    
 });
 
 require __DIR__ . '/auth.php';

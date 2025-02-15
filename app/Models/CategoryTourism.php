@@ -9,6 +9,11 @@ class CategoryTourism extends Model
 {
     use HasFactory;
 
-    protected $table = 'category_tourisms'; // Pastikan nama tabel sesuai dengan migrasi
-    protected $fillable = ['category_name']; // Sesuaikan dengan kolom dalam tabel
+    protected $table = 'category_tourisms';
+    protected $fillable = ['tourism_name'];
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

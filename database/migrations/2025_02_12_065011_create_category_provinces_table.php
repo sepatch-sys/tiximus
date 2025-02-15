@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('category_provinces', function (Blueprint $table) {
             $table->id();
             $table->string('province_name')->unique();
+            $table->longText('province_image')->nullable();
             $table->timestamps();
         });        
     }
