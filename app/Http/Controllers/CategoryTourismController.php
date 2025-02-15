@@ -8,9 +8,16 @@ use App\Models\CategoryTourism;
 class CategoryTourismController extends Controller
 {
     // Menampilkan daftar kategori
-    public function index()
+    public function index(Request $request)
     {
-        $categories = CategoryTourism::orderBy('created_at', 'desc')->paginate(10);
+        $query = CategoryTourism::query();
+
+        if ($request->has('search')) {
+            $query->where('category_name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $categories = $query->orderBy('created_at', 'desc')->paginate(10);
+
         return view('category_tourism.index', compact('categories'));
     }
 

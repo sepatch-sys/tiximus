@@ -13,9 +13,11 @@
         <div class="bg-white shadow-md rounded-lg overflow-hidden p-6">
             <h3 class="text-xl font-semibold mb-3">Tourist Category List</h3>
 
-            <a href="{{ route('category_tourism.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-3 inline-block">
-                + Add Category
-            </a>
+            <!-- Search Form -->
+            <form method="GET" action="{{ route('category_tourism.index') }}" class="mb-4 flex">
+                <input type="text" name="search" placeholder="Search category..." class="border p-2 rounded w-full" value="{{ request('search') }}">
+                <button type="submit" class="ml-2 bg-blue-500 text-white p-2 rounded">Search</button>
+            </form>
 
             <ul class="list-disc pl-6 mb-4">
                 @foreach ($categories as $category)

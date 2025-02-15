@@ -7,9 +7,16 @@ use App\Models\CategoryProvince;
 
 class CategoryProvinceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categoryProvinces = CategoryProvince::orderBy('created_at', 'desc')->paginate(10);
+        $query = CategoryProvince::query();
+
+        if ($request->has('search')) {
+            $query->where('province_name', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $categoryProvinces = $query->get();
+
         return view('category_province.index', compact('categoryProvinces'));
     }
 

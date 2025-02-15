@@ -57,6 +57,12 @@
                                 <p>Tourism Categories</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('category_tourism.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon text-warning"></i>
+                                <p>Add Tourism Categories</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -83,7 +89,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>                
+                </li>
                 <!-- Ticket Sales -->
                 <li class="nav-item">
                     <a href="#" class="nav-link">
