@@ -15,14 +15,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition {{ Auth::check() && Auth::user()->role == 'admin' ? 'sidebar-mini' : '' }}">
     <div class="wrapper">
 
         <!-- Navbar -->
         @include('layouts.navigation')
 
         <!-- Sidebar -->
-        @include('layouts.sidebar')
+        @if (Auth::check() && Auth::user()->role == 'admin')
+            @include('layouts.sidebar')
+        @endif
+
 
         <!-- Main Content -->
         <div class="content-wrapper">
@@ -42,6 +45,16 @@
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let isAdmin = @json(Auth::check() && Auth::user()->is_admin);
+            if (!isAdmin) {
+                document.body.classList.add("sidebar-collapse");
+            }
+        });
+    </script>
+    
+
 
 </body>
 
