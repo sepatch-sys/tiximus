@@ -10,9 +10,18 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::latest()->take(5)->get();
+        $tickets = Ticket::inRandomOrder()->take(5)->get();
         $provinces = CategoryProvince::latest()->take(5)->get();
 
-        return view('welcome', compact('tickets'), compact('provinces'));
+        // Pilih provinsi secara acak
+        $randomProvince = $provinces->random();
+
+        // Ambil tiket yang sesuai dengan provinsi terpilih dan batasi 5 tiket
+        $provinceTickets = Ticket::where('category_province_id', $randomProvince->id)
+            ->latest()
+            ->take(4)
+            ->get();
+
+        return view('welcome', compact('tickets', 'provinces', 'randomProvince', 'provinceTickets'));
     }
 }

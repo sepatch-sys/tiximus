@@ -1,40 +1,61 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light border-bottom">
-    <!-- Left navbar links (Hanya untuk user yang login) -->
-    @auth
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-dark" data-widget="pushmenu" href="#" role="button">
-                    <i class="fas fa-bars"></i>
-                </a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a href="{{ route('dashboard.index') }}" class="nav-link text-dark font-weight-regular">Dashboard</a>
-            </li>
-        </ul>
-    @endauth
+<nav class="main-header navbar navbar-expand navbar-light" style="background-color: #133E87;">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        @auth
+            @if (Auth::user()->role === 'admin')
+                <!-- Navbar khusus Admin -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" data-widget="pushmenu" href="#" role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ route('dashboard.index') }}" class="nav-link text-white font-weight-regular">Dashboard</a>
+                </li>
+            @else
+                <!-- Navbar khusus User -->
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ route('home.index') }}" class="nav-link text-white font-weight-regular">Home</a>
+                </li>
+            @endif
+        @endauth
 
-    <!-- Right navbar links -->
+        @guest
+            <!-- Navbar untuk Guest (Belum Login) -->
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ route('home.index') }}" class="nav-link text-white font-weight-regular">Home</a>
+            </li>
+        @endguest
+    </ul>
+
     <ul class="navbar-nav ml-auto">
         @auth
-            <!-- User Dropdown Menu -->
-            <li class="nav-item dropdown">
-                <a class="nav-link text-dark font-weight-regular" data-toggle="dropdown" href="#">
-                    <i class="far fa-user"></i>
-                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-                    <i class="fas fa-caret-down ml-1"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right border-0 shadow">
-                    <span class="dropdown-header text-dark font-weight-bold">
-                        <i class="fas fa-user-circle mr-2"></i> {{ Auth::user()->name }}
-                    </span>
-                    <div class="dropdown-divider"></div>
-                    <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="fas fa-user-cog mr-2"></i> Profile
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <form method="POST" action="{{ route('logout') }}">
+            <!-- User Dropdown Menu (Hanya untuk user dan admin) -->
+            <li class="relative" x-data="{ open: false }">
+                <!-- Tombol Dropdown -->
+                <button @click="open = !open" class="flex items-center text-white font-medium focus:outline-none">
+                    <i class="far fa-user text-lg"></i>
+                    <span class="hidden md:inline ml-2">{{ Auth::user()->name }}</span>
+                    <i class="fas fa-caret-down ml-2 text-sm"></i>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div x-show="open" @click.away="open = false"
+                    x-transition:enter="transition ease-out duration-200 transform opacity-0 scale-95"
+                    x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-150 transform opacity-100 scale-100"
+                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                    class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden border z-50">
+
+                    <div class="px-4 py-3 border-b">
+                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 text-center hover:bg-gray-100">
+                            Profile
+                        </a>
+                    </div>
+
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
-                        <button type="submit" class="dropdown-item text-danger">
+                        <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
                             <i class="fas fa-sign-out-alt mr-2"></i> Logout
                         </button>
                     </form>
@@ -44,11 +65,10 @@
 
         @guest
             <li class="nav-item">
-                <a href="{{ route('login') }}" class="nav-link text-dark font-weight-regular">
+                <a href="{{ route('login') }}" class="nav-link text-white font-weight-regular">
                     <i class="fas fa-sign-in-alt"></i> Login
                 </a>
             </li>
         @endguest
     </ul>
 </nav>
-    

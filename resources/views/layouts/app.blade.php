@@ -37,23 +37,26 @@
         </div>
 
         <!-- Footer -->
-        @include('layouts.footer')
-
+        @if (Auth::check() && Auth::user()->role == 'user')
+            @include('layouts.footer')
+        @endif
     </div>
 
     <!-- AdminLTE Scripts -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             let isAdmin = @json(Auth::check() && Auth::user()->is_admin);
             if (!isAdmin) {
                 document.body.classList.add("sidebar-collapse");
             }
         });
     </script>
-    
+
 
 
 </body>
