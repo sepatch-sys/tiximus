@@ -12,10 +12,10 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $tickets = Ticket::with('images')
-        ->when($request->has('category_tourism_id'), function ($query) use ($request) {
-            $query->where('category_tourism_id', $request->category_tourism_id);
-        })
-        ->inRandomOrder()->take(5)->get();
+            ->when($request->has('category_tourism_id'), function ($query) use ($request) {
+                $query->where('category_tourism_id', $request->category_tourism_id);
+            })
+            ->inRandomOrder()->take(5)->get();
 
         $provinces = CategoryProvince::latest()->take(5)->get();
 
@@ -34,5 +34,15 @@ class HomeController extends Controller
         $categories = CategoryTourism::all();
 
         return view('welcome', compact('tickets', 'provinces', 'randomProvince', 'provinceTickets', 'categories'));
+    }
+
+    // Fungsi untuk menampilkan halaman user-show-ticket
+    public function userShowTicket($id)
+    {
+        // Ambil data tiket berdasarkan ID
+        $ticket = Ticket::with('images')->findOrFail($id);
+
+        // Kirim data tiket ke tampilan
+        return view('show_ticket.show', compact('ticket'));
     }
 }
