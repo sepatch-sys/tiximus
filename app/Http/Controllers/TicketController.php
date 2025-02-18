@@ -6,15 +6,13 @@ use App\Models\CategoryProvince;
 use App\Models\CategoryTourism;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
-use App\Models\TicketScan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
     public function index()
     {
-        $tickets = Ticket::all();
+        $tickets = Ticket::with('images')->get();
         return view('tickets.index', compact('tickets'));
     }
 
@@ -35,9 +33,10 @@ class TicketController extends Controller
             'price' => 'required|numeric',
             'description' => 'nullable|string',
             'ticket_date' => 'required|date',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        Ticket::create([
+        $ticket = Ticket::create([
             'category_province_id' => $request->category_province_id,
             'category_tourism_id' => $request->category_tourism_id,
             'name' => $request->name,
@@ -46,11 +45,21 @@ class TicketController extends Controller
             'ticket_date' => $request->ticket_date,
         ]);
 
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('ticket_images', 'public');
+                $ticket->images()->create([
+                    'image_path' => $path,
+                ]);
+            }
+        }
+
         return redirect()->route('tickets.index')->with('success', 'Tiket berhasil dibuat!');
     }
 
     public function show(Ticket $ticket)
     {
+        $ticket->load('images');
         return view('tickets.show', compact('ticket'));
     }
 
@@ -66,15 +75,42 @@ class TicketController extends Controller
             'price' => 'required|numeric',
             'description' => 'nullable|string',
             'ticket_date' => 'required|date',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $ticket->update($request->all());
+        $ticket->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'ticket_date' => $request->ticket_date,
+        ]);
+
+        if ($request->has('deleted_images')) {
+            foreach ($request->deleted_images as $imageId) {
+                $image = $ticket->images()->findOrFail($imageId);
+                Storage::disk('public')->delete($image->image_path);
+                $image->delete();
+            }
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('ticket_images', 'public');
+                $ticket->images()->create([
+                    'image_path' => $path,
+                ]);
+            }
+        }
 
         return redirect()->route('tickets.index')->with('success', 'Tiket berhasil diperbarui.');
     }
 
     public function destroy(Ticket $ticket)
     {
+        foreach ($ticket->images as $image) {
+            Storage::disk('public')->delete($image->image_path);
+        }
+
         $ticket->delete();
         return redirect()->route('tickets.index')->with('success', 'Tiket berhasil dihapus.');
     }

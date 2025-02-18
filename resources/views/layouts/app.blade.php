@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Tiximus') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="website icon" type="jpeg" href="{{ asset('images/dufan.jpeg') }}">
 
     <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
