@@ -33,11 +33,11 @@
             <!-- User Dropdown Menu (Hanya untuk user dan admin) -->
             <li class="relative" x-data="{ open: false }">
                 <!-- Tombol Dropdown -->
-                <button @click="open = !open" class="flex items-center text-white font-medium focus:outline-none">
+                <a @click="open = !open" href="#" class="flex items-center text-white hover:text-gray-200 transition duration-200 ease-in-out">
                     <i class="far fa-user text-lg"></i>
-                    <span class="hidden md:inline ml-2">{{ Auth::user()->name }}</span>
+                    <span class="ml-2 hidden md:inline">{{ Auth::user()->name }}</span>
                     <i class="fas fa-caret-down ml-2 text-sm"></i>
-                </button>
+                </a>
 
                 <!-- Dropdown Menu -->
                 <div x-show="open" @click.away="open = false"
