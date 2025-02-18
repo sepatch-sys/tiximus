@@ -37,41 +37,41 @@
         </div>
 
         <!-- Kategori Aktivitas -->
-        <div class="flex flex-wrap justify-center gap-6 py-6">
-            <div class="group flex flex-col items-center cursor-pointer">
-                <div
-                    class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
-                    <i class="fas fa-th-large text-6xl text-gray-700 group-hover:text-white"></i>
+        <form method="GET" action="{{ route('home.index') }}" class="mb-6">
+            <div class="flex flex-wrap justify-center gap-6 py-6">
+                <!-- Semua Aktivitas Filter -->
+                <div class="group flex flex-col items-center cursor-pointer">
+                    <button type="submit" name="category_tourism_id" value="" class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
+                        <i class="fas fa-th-large text-6xl text-gray-700 group-hover:text-white"></i>
+                    </button>
+                    <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Semua Aktivitas</p>
                 </div>
-                <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Semua
-                    Aktivitas</p>
-            </div>
-
-            <div class="group flex flex-col items-center cursor-pointer">
-                <div
-                    class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
-                    <i class="fas fa-landmark text-6xl text-black group-hover:text-white"></i>
+        
+                <!-- Atraksi & Rekreasi Filter -->
+                <div class="group flex flex-col items-center cursor-pointer">
+                    <button type="submit" name="category_tourism_id" value="1" class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
+                        <i class="fas fa-landmark text-6xl text-black group-hover:text-white"></i>
+                    </button>
+                    <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Atraksi & Rekreasi</p>
                 </div>
-                <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Atraksi &
-                    Rekreasi</p>
-            </div>
-
-            <div class="group flex flex-col items-center cursor-pointer">
-                <div
-                    class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
-                    <i class="fas fa-ticket-alt text-6xl text-black group-hover:text-white"></i>
+        
+                <!-- Event Filter -->
+                <div class="group flex flex-col items-center cursor-pointer">
+                    <button type="submit" name="category_tourism_id" value="2" class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
+                        <i class="fas fa-ticket-alt text-6xl text-black group-hover:text-white"></i>
+                    </button>
+                    <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Event</p>
                 </div>
-                <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Event</p>
-            </div>
-
-            <div class="group flex flex-col items-center cursor-pointer">
-                <div
-                    class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
-                    <i class="fas fa-flag text-6xl text-black group-hover:text-white"></i>
+        
+                <!-- Tour Filter -->
+                <div class="group flex flex-col items-center cursor-pointer">
+                    <button type="submit" name="category_tourism_id" value="3" class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
+                        <i class="fas fa-flag text-6xl text-black group-hover:text-white"></i>
+                    </button>
+                    <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Tour</p>
                 </div>
-                <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Tour</p>
             </div>
-        </div>
+        </form>        
 
         <!-- Daftar Tiket -->
         <div class="max-w-7xl mx-auto px-6 py-8 md:py-10">
