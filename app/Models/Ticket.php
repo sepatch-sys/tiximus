@@ -20,4 +20,9 @@ class Ticket extends Model
     {
         return $this->belongsTo(CategoryTourism::class, 'category_tourism_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(TourismImage::class);
+    }
 }

@@ -65,14 +65,22 @@ class AuthenticatedSessionController extends Controller
                 'name' => $user->getName(),
                 'email' => $user->getEmail(),
                 'password' => bcrypt(Str::random(16)),
-                'role' => 'user',
                 'google_id' => $user->getId(),
             ]);
+
+            $newUser->role = $existingUser->role ?? 'user';
+            $newUser->save();
+
             Auth::login($newUser);
         }
-        return redirect()->intended(route('home.index'));
+
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('dashboard.index');
+        }
+
+        return redirect()->route('home.index');
     }
-    
+
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();

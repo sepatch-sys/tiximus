@@ -78,29 +78,28 @@
             <h2 class="text-2xl font-bold text-gray-700 mb-6">Rekomendasi Tempat Wisata</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                @foreach ($tickets as $ticket)
-                    <div
-                        class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-                        <!-- Gambar Wisata (Proporsional) -->
-                        <img src="{{ asset('storage/' . $ticket->image) }}" alt="{{ $ticket->name }}"
-                            class="w-full aspect-video object-cover">
-
-                        <!-- Konten -->
-                        <div class="p-3 flex flex-col h-auto">
-                            <h3 class="text-base font-semibold text-gray-800 truncate">{{ $ticket->name }}</h3>
-                            <p class="text-gray-600 text-sm mt-1 line-clamp-2">
-                                {{ Str::limit($ticket->description, 80) }}</p>
-                            <p class="text-lg font-bold text-orange-500 mt-2">Rp
-                                {{ number_format($ticket->price, 0, ',', '.') }}</p>
-
-                            <a href="#"
-                                class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg 
-                                hover:bg-blue-600 transition-colors text-sm text-center">
-                                Beli Tiket
-                            </a>
+                @if ($tickets->isNotEmpty())
+                    @foreach ($tickets as $ticket)
+                        <div
+                            class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+                            <img src="{{ asset('storage/' . $ticket->images->first()->image_path) }}"
+                                alt="{{ $ticket->name }}" class="w-12 h-12 object-cover rounded">
+                            <div class="p-3 flex flex-col h-auto">
+                                <h3 class="text-base font-semibold text-gray-800 truncate">{{ $ticket->name }}</h3>
+                                <p class="text-gray-600 text-sm mt-1 line-clamp-2">
+                                    {{ Str::limit($ticket->description, 80) }}</p>
+                                <p class="text-lg font-bold text-orange-500 mt-2">Rp
+                                    {{ number_format($ticket->price, 0, ',', '.') }}</p>
+                                <a href="#"
+                                    class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm text-center">
+                                    Beli Tiket
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @else
+                    <p class="text-gray-500 text-center">Belum ada tiket yang tersedia.</p>
+                @endif
             </div>
         </div>
     </div>
@@ -109,16 +108,23 @@
     <div class="max-w-7xl mx-auto px-6 py-8 md:py-10">
         <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center">Jelajahi wisata di Indonesia</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 justify-center">
-            @foreach ($provinces->take(5) as $province)
-                <div class="relative w-48 h-72 mx-auto rounded-3xl overflow-hidden shadow-lg group">
-                    <img src="{{ asset('storage/' . $province->province_image) }}" alt="{{ $province->province_name }}"
-                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                        <h3 class="text-xl font-semibold text-white text-center px-4">{{ $province->province_name }}
-                        </h3>
-                    </div>
+            @if ($provinces->isNotEmpty())
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 justify-center">
+                    @foreach ($provinces->take(5) as $province)
+                        <div class="relative w-48 h-72 mx-auto rounded-3xl overflow-hidden shadow-lg group">
+                            <img src="{{ asset('storage/' . $province->province_image) }}"
+                                alt="{{ $province->province_name }}"
+                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                <h3 class="text-xl font-semibold text-white text-center px-4">
+                                    {{ $province->province_name }}</h3>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
+            @else
+                <p class="text-gray-500 text-center">Belum ada data provinsi.</p>
+            @endif
         </div>
     </div>
 
@@ -126,47 +132,53 @@
     <div class="max-w-7xl mx-auto px-6 py-8 md:py-10">
         <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center">Rekomendasi Provinsi</h2>
 
-        @php
-            $randomProvince = $provinces->random();
-            $provinceTickets = $tickets->where('category_province_id', $randomProvince->id)->take(5);
-        @endphp
+        @if ($provinces->isNotEmpty())
+            @php
+                $randomProvince = $provinces->random();
+                $provinceTickets = $tickets->where('category_province_id', $randomProvince->id)->take(5);
+            @endphp
 
-        <div class="relative overflow-hidden">
-            <div class="flex items-start gap-6 transition-transform duration-500" id="province-container">
-                <!-- Kategori Provinsi -->
-                <div class="relative w-48 h-72 rounded-3xl overflow-hidden shadow-lg group flex-shrink-0"
-                    id="province-card">
-                    <img src="{{ asset('storage/' . $randomProvince->province_image) }}"
-                        alt="{{ $randomProvince->province_name }}"
-                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                        <h3 class="text-xl font-semibold text-white text-center px-4">
-                            {{ $randomProvince->province_name }}
-                        </h3>
+            <div class="relative overflow-hidden">
+                <div class="flex items-start gap-6 transition-transform duration-500" id="province-container">
+                    <!-- Kategori Provinsi -->
+                    <div class="relative w-48 h-72 rounded-3xl overflow-hidden shadow-lg group flex-shrink-0"
+                        id="province-card">
+                        <img src="{{ asset('storage/' . $randomProvince->province_image) }}"
+                            alt="{{ $randomProvince->province_name }}"
+                            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <h3 class="text-xl font-semibold text-white text-center px-4">
+                                {{ $randomProvince->province_name }}
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Daftar Tiket -->
+                    <div class="flex space-x-4 overflow-x-auto scrollbar-hide" id="ticket-list">
+                        @if ($provinceTickets->isNotEmpty())
+                            @foreach ($provinceTickets as $ticket)
+                                <div
+                                    class="bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-64 p-4 border-l-4 border-blue-500">
+                                    <h3 class="text-lg font-semibold text-gray-800">{{ $ticket->name }}</h3>
+                                    <p class="text-gray-600 mt-1">{{ Str::limit($ticket->description, 100) }}</p>
+                                    <p class="text-lg font-bold text-orange-500 mt-2">Rp
+                                        {{ number_format($ticket->price, 0, ',', '.') }}</p>
+                                    <p class="text-sm text-gray-500">Tanggal:
+                                        {{ \Carbon\Carbon::parse($ticket->ticket_date)->format('d M Y') }}</p>
+                                    <a href="#"
+                                        class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Beli
+                                        Tiket</a>
+                                </div>
+                            @endforeach
+                        @else
+                            <p class="text-gray-500">Belum ada tiket di provinsi ini.</p>
+                        @endif
                     </div>
                 </div>
-
-                <!-- Daftar Tiket -->
-                <div class="flex space-x-4 overflow-x-auto scrollbar-hide" id="ticket-list">
-                    @foreach ($provinceTickets as $ticket)
-                        <div
-                            class="bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-64 p-4 border-l-4 border-blue-500">
-                            <h3 class="text-lg font-semibold text-gray-800">{{ $ticket->name }}</h3>
-                            <p class="text-gray-600 mt-1">{{ Str::limit($ticket->description, 100) }}</p>
-                            <p class="text-lg font-bold text-orange-500 mt-2">
-                                Rp {{ number_format($ticket->price, 0, ',', '.') }}
-                            </p>
-                            <p class="text-sm text-gray-500">Tanggal:
-                                {{ \Carbon\Carbon::parse($ticket->ticket_date)->format('d M Y') }}</p>
-                            <a href="#"
-                                class="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                Beli Tiket
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
             </div>
-        </div>
+        @else
+            <p class="text-gray-500 text-center">Belum ada rekomendasi provinsi.</p>
+        @endif
     </div>
 
     <style>
