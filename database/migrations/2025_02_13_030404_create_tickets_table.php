@@ -13,6 +13,7 @@ return new class extends Migration {
             $table->foreignId('category_tourism_id')->constrained('category_tourisms')->onDelete('cascade');
             $table->string('name');
             $table->decimal('price', 13, 0);
+            $table->integer('quantity');
             $table->text('description')->nullable();
             $table->date('ticket_date');
             $table->timestamps();

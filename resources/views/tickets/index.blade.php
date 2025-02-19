@@ -26,6 +26,7 @@
                         <th class="border px-4 py-2 text-left">Image</th>
                         <th class="border px-4 py-2 text-left">Name</th>
                         <th class="border px-4 py-2 text-left">Price</th>
+                        <th class="border px-4 py-2 text-left">Quantity</th> <!-- Tambahkan Quantity -->
                         <th class="border px-4 py-2 text-left">Description</th>
                         <th class="border px-4 py-2 text-center">Actions</th>
                     </tr>
@@ -44,6 +45,7 @@
                             </td>                                                               
                             <td class="border px-4 py-2">{{ $ticket->name }}</td>
                             <td class="border px-4 py-2">Rp {{ number_format($ticket->price, 2, ',', '.') }}</td>
+                            <td class="border px-4 py-2 text-center">{{ $ticket->quantity }}</td> <!-- Tambahkan Quantity -->
                             <td class="border px-4 py-2">{{ $ticket->description }}</td>
                             <td class="border px-4 py-2 text-center space-x-2">
                                 <a href="{{ route('tickets.edit', $ticket->id) }}"

@@ -31,6 +31,7 @@ class TicketController extends Controller
             'category_tourism_id' => 'required|exists:category_tourisms,id',
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'quantity' => 'required|integer|min:1',
             'description' => 'nullable|string',
             'ticket_date' => 'required|date',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
@@ -41,6 +42,7 @@ class TicketController extends Controller
             'category_tourism_id' => $request->category_tourism_id,
             'name' => $request->name,
             'price' => $request->price,
+            'quantity' => $request->quantity,
             'description' => $request->description,
             'ticket_date' => $request->ticket_date,
         ]);
@@ -73,6 +75,7 @@ class TicketController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
+            'quantity' => 'required|integer|min:1',
             'description' => 'nullable|string',
             'ticket_date' => 'required|date',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -81,6 +84,7 @@ class TicketController extends Controller
         $ticket->update([
             'name' => $request->name,
             'price' => $request->price,
+            'quantity' => $request->quantity,
             'description' => $request->description,
             'ticket_date' => $request->ticket_date,
         ]);

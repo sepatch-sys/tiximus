@@ -191,9 +191,9 @@
         return {
             activeSlide: 0,
             images: [
-                '/path/to/your/first-image.jpg',
+                '/images/dufan.jpeg',
                 '/path/to/your/second-image.jpg',
-                '/path/to/your/third-image.jpg',
+                '/images/pestapora.png',
             ],
             start() {
                 setInterval(() => {

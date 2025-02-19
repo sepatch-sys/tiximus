@@ -92,6 +92,17 @@
                 @enderror
             </div>
 
+            {{-- Quantity --}}
+            <div>
+                <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                <input type="number" name="quantity" id="quantity" min="1"
+                    class="mt-1 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    required value="{{ old('quantity') }}">
+                @error('quantity')
+                    <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div>
                 <label for="images" class="block text-sm font-medium text-gray-700">Upload Images</label>
                 <input type="file" name="images[]" id="images"
