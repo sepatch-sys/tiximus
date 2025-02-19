@@ -42,6 +42,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user-show-ticket/{id}', [HomeController::class, 'userShowTicket'])->name('user-show-ticket');
+    Route::get('/tickets', [HomeController::class, 'allTicket'])->name('tickets.all');
 });
 
 require __DIR__ . '/auth.php';

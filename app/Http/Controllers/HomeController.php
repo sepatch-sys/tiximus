@@ -45,4 +45,21 @@ class HomeController extends Controller
         // Kirim data tiket ke tampilan
         return view('show_ticket.show', compact('ticket'));
     }
+
+    public function allticket(Request $request)
+    {
+        $category = $request->query('category');
+
+        $query = Ticket::query();
+
+        if ($category) {
+            $query->whereHas('categoryTourism', function ($q) use ($category) {
+                $q->where('slug', $category);
+            });
+        }
+
+        $tickets = $query->get();
+
+        return view('all_ticket.all', compact('tickets'));
+    }
 }
