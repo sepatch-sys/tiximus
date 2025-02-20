@@ -13,34 +13,59 @@
                     <a href="{{ route('dashboard.index') }}" class="nav-link text-white font-weight-regular">Dashboard</a>
                 </li>
             @else
-                <!-- Navbar khusus User -->
-                <div class="relative w-full">
-                    <input 
-                        type="text" 
-                        class="form-input px-4 py-2 rounded-full w-full bg-white text-gray-800 shadow-md border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all duration-300 ease-in-out" 
+                <!-- Search Box di Kiri -->
+                <div class="relative w-64">
+                    <input type="text"
+                        class="form-input px-4 py-2 rounded-full w-full bg-white text-gray-800 shadow-sm border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all duration-300 ease-in-out"
                         placeholder="Search...">
-                    <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 transition-all duration-300 ease-in-out"></i>
-                </div>                
+                    <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                </div>
+
+                <!-- Logo di Tengah -->
+                <div class="absolute left-1/2 transform -translate-x-1/2">
+                    <a href="/" class="block">
+                        <img src="/images/logoTiximus.png" alt="Logo" class="h-10">
+                    </a>
+                </div>
             @endif
         @endauth
 
         @guest
-            <div class="flex items-center w-1/3">
-                <input type="text" class="form-control px-3 py-2 rounded-lg" placeholder="Search...">
+            <div class="relative w-full">
+                <input type="text"
+                    class="form-input px-4 py-2 rounded-full w-full bg-white text-gray-800 shadow-md border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all duration-300 ease-in-out"
+                    placeholder="Search...">
+                <i
+                    class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 transition-all duration-300 ease-in-out"></i>
             </div>
         @endguest
     </ul>
 
     <ul class="navbar-nav ml-auto">
         @auth
-            <!-- User Dropdown Menu (Hanya untuk user dan admin) -->
             <li class="relative" x-data="{ open: false }">
-                <!-- Tombol Dropdown -->
-                <a @click="open = !open" href="#"
-                    class="flex items-center text-white hover:text-gray-200 transition duration-200 ease-in-out">
-                    <i class="far fa-user text-lg"></i>
-                    <span class="ml-2 hidden md:inline">{{ Auth::user()->name }}</span>
-                    <i class="fas fa-caret-down ml-2 text-sm"></i>
+                <!-- Tombol Dropdown (Gambar Profil atau Inisial) -->
+                <a @click="open = !open" href="#" class="flex items-center">
+                    @if (Auth::user()->profile_photo_url)
+                        <img src="{{ Auth::user()->profile_photo_url }}" alt="Profile"
+                            class="w-10 h-10 rounded-full border border-gray-300 shadow-sm object-cover">
+                    @else
+                        @php
+                            $colors = [
+                                'bg-red-500',
+                                'bg-blue-500',
+                                'bg-green-500',
+                                'bg-yellow-500',
+                                'bg-purple-500',
+                                'bg-pink-500',
+                            ];
+                            $color = $colors[ord(strtoupper(substr(Auth::user()->name, 0, 1))) % count($colors)];
+                        @endphp
+                        <div
+                            class="w-10 h-10 rounded-full {{ $color }} flex items-center justify-center text-white font-semibold text-lg border border-gray-300 shadow-md">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                    @endif
                 </a>
 
                 <!-- Dropdown Menu -->
@@ -51,12 +76,13 @@
                     x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                     class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden border z-50">
 
-                    <div class="px-4 py-3 border-b">
-                        <a href="{{ route('profile.edit') }}"
-                            class="block px-4 py-2 text-gray-700 text-center hover:bg-gray-100">
-                            Profile
-                        </a>
+                    <div class="px-4 py-3 border-b text-center">
+                        <span class="block text-gray-700 font-medium">{{ Auth::user()->name }}</span>
                     </div>
+
+                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-user-edit mr-2"></i> Profile
+                    </a>
 
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf

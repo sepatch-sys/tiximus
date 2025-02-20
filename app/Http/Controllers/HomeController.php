@@ -48,7 +48,7 @@ class HomeController extends Controller
 
     public function allticket(Request $request)
     {
-        $category = $request->query('category');
+        $category = $request->query('category'); // Ambil kategori dari query string
 
         $query = Ticket::query();
 
@@ -60,6 +60,9 @@ class HomeController extends Controller
 
         $tickets = $query->get();
 
-        return view('all_ticket.all', compact('tickets'));
+        return view('all_ticket.all', [
+            'tickets' => $tickets,
+            'selectedCategory' => $category // Mengirim kategori yang dipilih agar bisa digunakan di tampilan
+        ]);
     }
 }

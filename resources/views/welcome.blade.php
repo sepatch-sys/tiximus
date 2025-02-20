@@ -46,9 +46,10 @@
                         class="w-36 h-36 flex justify-center items-center rounded-full border-2 border-black group-hover:bg-yellow-500 transition-all shadow-md">
                         <i class="fas fa-th-large text-6xl text-gray-700 group-hover:text-white"></i>
                     </div>
-                    <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Semua Aktivitas</p>
+                    <p class="mt-3 font-semibold text-lg text-gray-800 group-hover:text-yellow-500 transition-all">Semua
+                        Aktivitas</p>
                 </a>
-                
+
                 <!-- Atraksi & Rekreasi Filter -->
                 <div class="group flex flex-col items-center cursor-pointer">
                     <div
@@ -87,7 +88,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 @if ($tickets->isNotEmpty())
                     @foreach ($tickets as $ticket)
-                        <a href="{{ route('user-show-ticket', ['id' => $ticket->id]) }}" 
+                        <a href="{{ route('user-show-ticket', ['id' => $ticket->id]) }}"
                             class="block bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105">
                             @if ($ticket->images->first())
                                 <img src="{{ asset('storage/' . $ticket->images->first()->image_path) }}"
@@ -110,7 +111,7 @@
                     <p class="text-gray-500 text-center">Belum ada tiket yang tersedia.</p>
                 @endif
             </div>
-        </div>        
+        </div>
 
         <!-- Eksplorasi Wisata -->
         <div class="max-w-7xl mx-auto px-6 py-8 md:py-10">
@@ -157,19 +158,27 @@
                         </div>
 
                         <!-- Daftar Tiket -->
-                        <div class="flex space-x-4 overflow-x-auto scrollbar-hide">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                             @foreach ($provinceTickets as $ticket)
-                                <div
-                                    class="bg-white rounded-lg shadow-md overflow-hidden flex-shrink-0 w-64 p-4 border-l-4 border-blue-500">
-                                    <h3 class="text-lg font-semibold text-gray-800">{{ $ticket->name }}</h3>
-                                    <p class="text-gray-600 mt-1">{{ Str::limit($ticket->description, 100) }}</p>
-                                    <p class="text-lg font-bold text-orange-500 mt-2">Rp
-                                        {{ number_format($ticket->price, 0, ',', '.') }}</p>
-                                    <a href="{{ route('user-show-ticket', ['id' => $ticket->id]) }}"
-                                        class="inline-block mt-3 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm text-center">
-                                        Beli Tiket
-                                    </a>
-                                </div>
+                                <a href="{{ route('user-show-ticket', ['id' => $ticket->id]) }}"
+                                    class="block bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                                    @if ($ticket->images->first())
+                                        <img src="{{ asset('storage/' . $ticket->images->first()->image_path) }}"
+                                            alt="{{ $ticket->name }}" class="w-full h-40 object-cover">
+                                    @else
+                                        <p class="text-center text-gray-500 py-10">Tidak ada gambar yang tersedia</p>
+                                    @endif
+                                    <div class="p-4 flex flex-col h-auto">
+                                        <h3 class="text-base font-semibold text-gray-800 truncate">{{ $ticket->name }}
+                                        </h3>
+                                        <p class="text-gray-600 text-sm mt-1 line-clamp-2">
+                                            {{ Str::limit($ticket->description, 60) }}
+                                        </p>
+                                        <p class="text-lg font-semibold text-orange-500 mt-2">Rp
+                                            {{ number_format($ticket->price, 0, ',', '.') }}
+                                        </p>
+                                    </div>
+                                </a>
                             @endforeach
                         </div>
                     </div>
